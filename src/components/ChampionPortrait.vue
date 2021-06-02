@@ -1,13 +1,14 @@
 <template>
-  <div>
+  <div class="relative">
     <img
       :class="{
-        grayscale: props.disabled,
+        grayscale: props.disabled || selected,
         'rounded-full': props.rounded,
         'border-2 border-yellow-400': side == 'blue',
         'border-2 border-red-700': side == 'red',
+        'cursor-pointer hover-effects': props.clickable,
       }"
-      class="mx-5"
+      class="mx-5 z-10"
       :key="name"
       :src="image"
       :alt="name"
@@ -15,6 +16,14 @@
       :height="imageSize"
     />
     <p class="text-sm" v-if="!hideName">{{ name }}</p>
+    <div
+      v-if="selected"
+      class="cursor-pointer absolute z-20 rounded-full border-2 border-yellow-400 mx-5 overlay"
+    ></div>
+    <div
+      v-if="selected"
+      class="cursor-pointer absolute z-20 border-2 border-yellow-400 mx-5 overlay"
+    ></div>
   </div>
 </template>
 
@@ -27,6 +36,10 @@ export default defineComponent({
   name: 'ChampionPortrait',
   props: {
     value: Object as PropType<ChampionPortrait>,
+    clickable: {
+      type: Boolean,
+      default: false,
+    },
     rounded: {
       type: Boolean,
       default: false,
@@ -36,6 +49,10 @@ export default defineComponent({
       default: false,
     },
     disabled: {
+      type: Boolean,
+      default: false,
+    },
+    selected: {
       type: Boolean,
       default: false,
     },
@@ -60,7 +77,15 @@ export default defineComponent({
 .grayscale {
   filter: grayscale(100%);
 }
-.champ-portrait {
+.overlay {
   width: 70px;
+  height: 70px;
+  top: 0;
+  left: 0;
+  // transform: translateX(50%);
+}
+.hover-effects:hover {
+  @apply border-2;
+  @apply border-yellow-400;
 }
 </style>

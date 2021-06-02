@@ -9,6 +9,9 @@
         <ChampionsPortrait
           class="mb-2"
           :key="c.name"
+          clickable
+          :selected="c.id == selectedChampion"
+          @click="clickChampion(c.id)"
           :value="{
             name: c.name,
             image: `https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/${c.id.toLowerCase()}.png`,
@@ -21,7 +24,7 @@
 
 <script lang="ts">
 import { useChampions } from '@/store/champions'
-import { defineComponent, onBeforeMount } from 'vue'
+import { defineComponent, onBeforeMount, ref } from 'vue'
 
 import ChampionsPortrait from './ChampionPortrait.vue'
 
@@ -30,11 +33,17 @@ export default defineComponent({
   components: { ChampionsPortrait },
 
   setup() {
+    const selectedChampion = ref('')
+
+    const clickChampion = (champId: string): void => {
+      selectedChampion.value = champId == selectedChampion.value ? '' : champId
+    }
+
     const champStore = useChampions()
     onBeforeMount(async () => {
       await champStore.getChampionList()
     })
-    return { champStore }
+    return { champStore, selectedChampion, clickChampion }
   },
 })
 </script>
