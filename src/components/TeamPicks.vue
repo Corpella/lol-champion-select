@@ -1,12 +1,17 @@
 <template>
   <div class="flex flex-col self-center mt-5">
-    <div v-for="(c, i) in props.value.champions" :key="i" class="flex">
-      <div class="mb-5">
-        <ChampionsPortrait :value="c" hideName />
+    <div
+      v-for="(c, i) in champions"
+      :key="i"
+      class="flex mb-5"
+      :class="{ 'flex-row-reverse': side == 'red' }"
+    >
+      <div class="">
+        <ChampionsPortrait :value="c" hideName rounded :side="side" />
       </div>
-      <div>
-        <p class="font-bold ml-3">{{ firstLetterUppercase(c.name) }}</p>
-        <p class="ml-3">Summoner {{ i + 1 }}</p>
+      <div class="self-center">
+        <p class="font-bold">{{ firstLetterUppercase(c.name) }}</p>
+        <p class="">Summoner {{ i + 1 }}</p>
       </div>
     </div>
   </div>
@@ -26,7 +31,11 @@ export default defineComponent({
     const firstLetterUppercase = (name: string): string =>
       name.charAt(0).toUpperCase() + name.slice(1)
 
-    return { props, firstLetterUppercase }
+    return {
+      champions: props.value?.champions,
+      side: props.value?.side,
+      firstLetterUppercase,
+    }
   },
 })
 </script>

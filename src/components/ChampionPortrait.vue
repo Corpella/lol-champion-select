@@ -1,14 +1,20 @@
 <template>
   <div>
     <img
-      :class="{ grayscale: props.disabled }"
+      :class="{
+        grayscale: props.disabled,
+        'rounded-full': props.rounded,
+        'border-2 border-yellow-400': side == 'blue',
+        'border-2 border-red-700': side == 'red',
+      }"
       class="mx-5"
-      :src="props.value.image"
-      :alt="props.value.name"
+      :key="name"
+      :src="image"
+      :alt="name"
       :width="imageSize"
       :height="imageSize"
     />
-    <p class="text-sm" v-if="!hideName">{{ props.value.name }}</p>
+    <p class="text-sm" v-if="!hideName">{{ name }}</p>
   </div>
 </template>
 
@@ -33,11 +39,19 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    side: {
+      type: String as PropType<'blue' | 'red'>,
+    },
   },
 
   setup(props) {
     const imageSize = 70
-    return { props, imageSize }
+    return {
+      props,
+      name: props.value?.name,
+      image: props.value?.image,
+      imageSize,
+    }
   },
 })
 </script>

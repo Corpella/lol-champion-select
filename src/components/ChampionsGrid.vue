@@ -2,12 +2,13 @@
   <div id="cs-container" class="w-full bg-green-400">
     <div class="grid grid-cols-6 mt-10">
       <div
-        v-for="(c, i) in champStore.champions"
+        v-for="(c, i) in champStore.filteredChampions"
         :key="i"
         class="justify-self-center"
       >
         <ChampionsPortrait
           class="mb-2"
+          :key="c.name"
           :value="{
             name: c.name,
             image: `https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/${c.id.toLowerCase()}.png`,

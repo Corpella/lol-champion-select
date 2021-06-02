@@ -17,6 +17,7 @@
           <p class="text-2xl mb-2">CHOOSE YOUR CHAMPION!</p>
           <p class="text-2xl">30</p>
         </div>
+        <div><GridHeader /></div>
         <div class="w-full text-center overflow-hidden">
           <!-- Champion pick component -->
           <ChampionsGrid />
@@ -39,13 +40,14 @@
 
 <script lang="ts">
 import ChampionsGrid from '@/components/ChampionsGrid.vue'
+import GridHeader from '@/components/GridHeader.vue'
 import { defineComponent } from 'vue'
 
 import TeamPicks from '../components/TeamPicks.vue'
 
 export default defineComponent({
   name: 'ChampionSelect',
-  components: { TeamPicks, ChampionsGrid },
+  components: { TeamPicks, ChampionsGrid, GridHeader },
   setup() {
     const championsBlue = [
       {

@@ -7,6 +7,12 @@ export interface ChampionPortrait {
     image: string,
 }
 
+export interface SingleChampion {
+    name: string,
+    id: string,
+}
+
+
 export interface TeamPicks {
     side: Side,
     champions: ChampionPortrait[]
