@@ -2,13 +2,13 @@
   <div>
     <div class="flex w-full mt-5">
       <div id="blue-side" class="w-1/4 bg-blue-300">
-        <div class="w-full">
+        <div class="w-full mx-5 mb-5">
           <!-- Ban component -->
-          bans
+          <Bans :side="'blue'" :bans="bansBlue" />
         </div>
         <div class="flex flex-col justify-center">
           <!-- Team champions component  -->
-          <TeamPicks :value="{ side: 'blue', champions: championsBlue }" />
+          <TeamPicks side="'blue'" :champions="championsBlue" />
         </div>
       </div>
 
@@ -17,7 +17,9 @@
           <p class="text-2xl mb-2">CHOOSE YOUR CHAMPION!</p>
           <p class="text-2xl">30</p>
         </div>
-        <div><GridHeader /></div>
+        <div>
+          <GridHeader />
+        </div>
         <div class="w-full text-center overflow-hidden">
           <!-- Champion pick component -->
           <ChampionsGrid />
@@ -25,29 +27,46 @@
       </div>
 
       <div id="red-side" class="w-1/4 bg-red-300">
-        <div class="w-full">
+        <div class="w-full mx-5 mb-5">
           <!-- Ban component -->
-          bans
+          <Bans :side="'red'" :bans="bansRed" />
         </div>
         <div class="flex flex-col justify-center">
           <!-- Team champions component  -->
-          <TeamPicks :value="{ side: 'red', champions: championsRed }" />
+          <TeamPicks side="'red'" :champions="championsRed" />
         </div>
       </div>
     </div>
+    <!-- <div class="flex w-7/10 mt-3 justify-between mx-10">
+      <button
+        @click="addBan('blue', 'viego')"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Add blueside ban
+      </button>
+      <button
+        @click="addBan('red', 'yuumi')"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Add redside ban
+      </button>
+    </div> -->
   </div>
 </template>
 
 <script lang="ts">
+import Bans from '@/components/Bans.vue'
 import ChampionsGrid from '@/components/ChampionsGrid.vue'
 import GridHeader from '@/components/GridHeader.vue'
-import { defineComponent } from 'vue'
+import { useChampions } from '@/store/champions'
+import { Champions, Side } from '@/types'
+import { defineComponent, ref } from 'vue'
 
 import TeamPicks from '../components/TeamPicks.vue'
 
 export default defineComponent({
   name: 'ChampionSelect',
-  components: { TeamPicks, ChampionsGrid, GridHeader },
+  components: { TeamPicks, ChampionsGrid, GridHeader, Bans },
   setup() {
     const championsBlue = [
       {
@@ -104,7 +123,11 @@ export default defineComponent({
           'https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/janna.png',
       },
     ]
-    return { championsBlue, championsRed }
+    const champStore = useChampions()
+    const bansBlue = champStore.bans.blue
+    const bansRed = champStore.bans.red
+
+    return { championsBlue, championsRed, bansBlue, bansRed }
   },
 })
 </script>

@@ -20,11 +20,11 @@ export default defineComponent({
   name: 'Home',
   components: {},
   setup() {
-    const champions = useChampions()
+    const champStore = useChampions()
     onMounted(() => {
       // champions.getChampionList()
     })
-    return { champions }
+    return { champStore }
   },
 })
 </script>

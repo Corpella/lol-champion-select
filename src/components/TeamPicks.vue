@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-col self-center mt-5">
     <div
-      v-for="(c, i) in champions"
+      v-for="(c, i) in props.champions"
       :key="i"
       class="flex mb-5"
-      :class="{ 'flex-row-reverse': side == 'red' }"
+      :class="{ 'flex-row-reverse': props.side == 'red' }"
     >
       <div class="">
         <ChampionsPortrait :value="c" hideName rounded :side="side" />
@@ -20,20 +20,22 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 
-import { TeamPicks } from '@/types'
+import { Side, Champions } from '@/types'
 import ChampionsPortrait from './ChampionPortrait.vue'
 
 export default defineComponent({
   name: 'TeamPicks',
   components: { ChampionsPortrait },
-  props: { value: Object as PropType<TeamPicks> },
+  props: {
+    side: String as PropType<Side>,
+    champions: Array as PropType<Champions>,
+  },
   setup(props) {
     const firstLetterUppercase = (name: string): string =>
       name.charAt(0).toUpperCase() + name.slice(1)
 
     return {
-      champions: props.value?.champions,
-      side: props.value?.side,
+      props,
       firstLetterUppercase,
     }
   },

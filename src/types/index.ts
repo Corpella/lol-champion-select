@@ -1,6 +1,8 @@
 //Champions
 
-type Side = 'blue' | 'red'
+export type Side = 'blue' | 'red'
+
+export type Champions = ChampionPortrait[]
 
 export interface ChampionPortrait {
     name: string,
@@ -15,5 +17,5 @@ export interface SingleChampion {
 
 export interface TeamPicks {
     side: Side,
-    champions: ChampionPortrait[]
+    champions: Champions
 }

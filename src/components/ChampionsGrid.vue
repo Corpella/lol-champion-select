@@ -20,6 +20,18 @@
       </div>
     </div>
   </div>
+  <div class="mt-5">
+    <button
+      @click="champStore.banChampion('blue', selectedChampion.toLowerCase())"
+      class="text-white font-bold py-2 px-4 rounded"
+      :class="
+        selectedChampion ? 'bg-blue-500 hover:bg-blue-700' : ' bg-gray-500'
+      "
+      :disabled="!selectedChampion"
+    >
+      Ban champion
+    </button>
+  </div>
 </template>
 
 <script lang="ts">
@@ -36,10 +48,11 @@ export default defineComponent({
     const selectedChampion = ref('')
 
     const clickChampion = (champId: string): void => {
-      selectedChampion.value = champId == selectedChampion.value ? '' : champId
+      selectedChampion.value = champId
     }
 
     const champStore = useChampions()
+
     onBeforeMount(async () => {
       await champStore.getChampionList()
     })
