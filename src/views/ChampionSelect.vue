@@ -59,8 +59,7 @@ import Bans from '@/components/Bans.vue'
 import ChampionsGrid from '@/components/ChampionsGrid.vue'
 import GridHeader from '@/components/GridHeader.vue'
 import { useChampions } from '@/store/champions'
-import { Champions, Side } from '@/types'
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 
 import TeamPicks from '../components/TeamPicks.vue'
 

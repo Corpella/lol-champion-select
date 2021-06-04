@@ -10,11 +10,14 @@ export const useChampions = defineStore({
         bans: {
             red: [] as Champions,
             blue: [] as Champions
-        }
+        },
     }),
     getters: {
         filteredChampions(): SingleChampion[] {
             return this.queryFilter ? this.champions.filter((c: SingleChampion) => c.name.toLowerCase().includes(this.queryFilter.toLowerCase())) : this.champions
+        },
+        bannedChampions(): string[] {
+            return [...this.bans.red.map(c => c.name), ...this.bans.blue.map(c => c.name)]
         }
     },
     actions: {

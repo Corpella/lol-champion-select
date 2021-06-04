@@ -7,10 +7,11 @@
         class="justify-self-center"
       >
         <ChampionsPortrait
-          class="mb-2"
           :key="c.name"
+          class="mb-2"
           clickable
           :selected="c.id == selectedChampion"
+          :disabled="isChampBanned(c.id)"
           @click="clickChampion(c.id)"
           :value="{
             name: c.name,
@@ -22,7 +23,7 @@
   </div>
   <div class="mt-5">
     <button
-      @click="champStore.banChampion('blue', selectedChampion.toLowerCase())"
+      @click="banChampion"
       class="text-white font-bold py-2 px-4 rounded"
       :class="
         selectedChampion ? 'bg-blue-500 hover:bg-blue-700' : ' bg-gray-500'
@@ -48,15 +49,35 @@ export default defineComponent({
     const selectedChampion = ref('')
 
     const clickChampion = (champId: string): void => {
+      if (isChampBanned(champId)) {
+        return
+      }
       selectedChampion.value = champId
     }
 
     const champStore = useChampions()
 
+    //TODO Fix name/id confusion around types
+
+    const isChampBanned = (name: string): boolean => {
+      return champStore.bannedChampions.includes(name.toLowerCase())
+    }
+
+    const banChampion = () => {
+      champStore.banChampion('blue', selectedChampion.value.toLowerCase())
+      selectedChampion.value = ''
+    }
+
     onBeforeMount(async () => {
       await champStore.getChampionList()
     })
-    return { champStore, selectedChampion, clickChampion }
+    return {
+      champStore,
+      selectedChampion,
+      clickChampion,
+      isChampBanned,
+      banChampion,
+    }
   },
 })
 </script>
