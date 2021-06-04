@@ -73,7 +73,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
 .grayscale {
   filter: grayscale(100%);
 }
@@ -82,7 +82,6 @@ export default defineComponent({
   height: 70px;
   top: 0;
   left: 0;
-  // transform: translateX(50%);
 }
 .hover-effects:hover {
   @apply border-2;
