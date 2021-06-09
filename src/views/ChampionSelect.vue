@@ -74,7 +74,7 @@ import { useChampions } from '@/store/champions'
 import { Side } from '@/types'
 import { computed, defineComponent } from 'vue'
 
-import TeamPicks from '../components/TeamPicks.vue'
+import TeamPicks from '@/components/TeamPicks.vue'
 
 export default defineComponent({
   name: 'ChampionSelect',

@@ -30,7 +30,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 
-import { ChampionPortrait } from '../types'
+import { ChampionPortrait } from '@/types'
 
 export default defineComponent({
   name: 'ChampionPortrait',
@@ -83,7 +83,6 @@ export default defineComponent({
   filter: grayscale(100%);
 }
 .overlay {
-
   width: v-bind(imageSizePx);
   height: v-bind(imageSizePx);
   top: 0;

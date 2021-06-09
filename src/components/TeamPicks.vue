@@ -1,18 +1,36 @@
 <template>
   <div class="flex flex-col self-center mt-5">
     <div
-      v-for="(c, i) in props.champions"
+      v-for="i in 5"
       :key="i"
       class="flex mb-5"
       :class="{ 'flex-row-reverse': props.position == 'right' }"
     >
-      <div class="">
-        <ChampionsPortrait :value="c" hideName rounded :side="side" />
-      </div>
-      <div class="self-center">
-        <p class="font-bold">{{ firstLetterUppercase(c.name) }}</p>
-        <p class="">Summoner {{ i + 1 }}</p>
-      </div>
+      <template v-if="props.champions[i - 1]">
+        <div>
+          <ChampionsPortrait
+            :value="props.champions[i - 1]"
+            hideName
+            rounded
+            :side="side"
+          />
+        </div>
+        <div class="self-center">
+          <p class="font-bold">
+            {{ firstLetterUppercase(props.champions[i - 1].name) }}
+          </p>
+          <p class="">Summoner {{ i }}</p>
+        </div>
+      </template>
+      <template v-else>
+        <div class="rounded-full bg-black empty-portrait mx-5" />
+        <div class="self-center">
+          <p class="font-bold">
+            Something... 
+          </p>
+          <p class="">Summoner {{ i }}</p>
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -43,4 +61,9 @@ export default defineComponent({
 })
 </script>
 
-<style></style>
+<style lang="scss">
+.empty-portrait {
+  width: 70px;
+  height: 70px;
+}
+</style>
