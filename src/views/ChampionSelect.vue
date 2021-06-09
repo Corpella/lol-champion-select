@@ -8,7 +8,11 @@
         </div>
         <div class="flex flex-col justify-center">
           <!-- Team champions component  -->
-          <TeamPicks side="'blue'" :champions="championsBlue" />
+          <TeamPicks
+            side="'blue'"
+            :champions="championsBlue"
+            :position="'left'"
+          />
         </div>
       </div>
 
@@ -22,7 +26,11 @@
         </div>
         <div class="w-full text-center overflow-hidden">
           <!-- Champion pick component -->
-          <ChampionsGrid />
+          <ChampionsGrid
+            :champions="filteredChampions"
+            :bannedChampions="bannedChampions"
+            @bannedChamp="handleBan"
+          />
         </div>
       </div>
 
@@ -33,7 +41,11 @@
         </div>
         <div class="flex flex-col justify-center">
           <!-- Team champions component  -->
-          <TeamPicks side="'red'" :champions="championsRed" />
+          <TeamPicks
+            side="'red'"
+            :champions="championsRed"
+            :position="'right'"
+          />
         </div>
       </div>
     </div>
@@ -59,7 +71,8 @@ import Bans from '@/components/Bans.vue'
 import ChampionsGrid from '@/components/ChampionsGrid.vue'
 import GridHeader from '@/components/GridHeader.vue'
 import { useChampions } from '@/store/champions'
-import { defineComponent } from 'vue'
+import { Side } from '@/types'
+import { computed, defineComponent } from 'vue'
 
 import TeamPicks from '../components/TeamPicks.vue'
 
@@ -123,10 +136,35 @@ export default defineComponent({
       },
     ]
     const champStore = useChampions()
+
+    champStore.getChampionList()
+
     const bansBlue = champStore.bans.blue
     const bansRed = champStore.bans.red
 
-    return { championsBlue, championsRed, bansBlue, bansRed }
+    const filteredChampions = computed(() => champStore.filteredChampions)
+
+    const bannedChampions = computed(() => champStore.bannedChampions)
+
+    const handleBan = ({
+      side,
+      champ,
+    }: {
+      side: Side
+      champ: string
+    }): void => {
+      champStore.banChampion(side, champ)
+    }
+
+    return {
+      championsBlue,
+      championsRed,
+      bansBlue,
+      bansRed,
+      filteredChampions,
+      bannedChampions,
+      handleBan,
+    }
   },
 })
 </script>

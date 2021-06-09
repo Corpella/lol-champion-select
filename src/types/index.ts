@@ -2,6 +2,8 @@
 
 export type Side = 'blue' | 'red'
 
+export type Position = 'left' | 'right'
+
 export type Champions = ChampionPortrait[]
 
 export interface ChampionPortrait {

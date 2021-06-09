@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 
 import { ChampionPortrait } from '../types'
 
@@ -62,12 +62,17 @@ export default defineComponent({
   },
 
   setup(props) {
+    // TODO Maybe put image size as a  prop?
+
     const imageSize = 70
+    const imageSizePx = computed(() => `${imageSize}px`)
+
     return {
       props,
       name: props.value?.name,
       image: props.value?.image,
       imageSize,
+      imageSizePx,
     }
   },
 })
@@ -78,8 +83,9 @@ export default defineComponent({
   filter: grayscale(100%);
 }
 .overlay {
-  width: 70px;
-  height: 70px;
+
+  width: v-bind(imageSizePx);
+  height: v-bind(imageSizePx);
   top: 0;
   left: 0;
 }

@@ -4,7 +4,7 @@
       v-for="(c, i) in props.champions"
       :key="i"
       class="flex mb-5"
-      :class="{ 'flex-row-reverse': props.side == 'red' }"
+      :class="{ 'flex-row-reverse': props.position == 'right' }"
     >
       <div class="">
         <ChampionsPortrait :value="c" hideName rounded :side="side" />
@@ -20,7 +20,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 
-import { Side, Champions } from '@/types'
+import { Side, Champions, Position } from '@/types'
 import ChampionsPortrait from './ChampionPortrait.vue'
 
 export default defineComponent({
@@ -28,6 +28,7 @@ export default defineComponent({
   components: { ChampionsPortrait },
   props: {
     side: String as PropType<Side>,
+    position: String as PropType<Position>,
     champions: Array as PropType<Champions>,
   },
   setup(props) {

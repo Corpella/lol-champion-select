@@ -1,8 +1,8 @@
 <template>
-  <div id="cs-container" class="w-full bg-green-400">
+  <div id="cs-container" class="w-full bg-green-400" v-if="props.champions">
     <div class="grid grid-cols-6 mt-10">
       <div
-        v-for="(c, i) in champStore.filteredChampions"
+        v-for="(c, i) in props.champions"
         :key="i"
         class="justify-self-center"
       >
@@ -36,16 +36,21 @@
 </template>
 
 <script lang="ts">
-import { useChampions } from '@/store/champions'
-import { defineComponent, onBeforeMount, ref } from 'vue'
+import { SingleChampion } from '@/types'
+import { defineComponent, PropType, ref } from 'vue'
 
 import ChampionsPortrait from './ChampionPortrait.vue'
 
 export default defineComponent({
   name: 'ChampionsGrid',
   components: { ChampionsPortrait },
+  emits: ['bannedChamp'],
+  props: {
+    champions: Array as PropType<SingleChampion[]>,
+    bannedChampions: { type: Array as PropType<string[]>, required: true },
+  },
 
-  setup() {
+  setup(props, { emit }) {
     const selectedChampion = ref('')
 
     const clickChampion = (champId: string): void => {
@@ -55,24 +60,22 @@ export default defineComponent({
       selectedChampion.value = champId
     }
 
-    const champStore = useChampions()
-
     //TODO Fix name/id confusion around types
 
     const isChampBanned = (name: string): boolean => {
-      return champStore.bannedChampions.includes(name.toLowerCase())
+      return props.bannedChampions.includes(name.toLowerCase())
     }
 
     const banChampion = () => {
-      champStore.banChampion('blue', selectedChampion.value.toLowerCase())
+      emit('bannedChamp', {
+        side: 'blue',
+        champ: selectedChampion.value.toLowerCase(),
+      })
       selectedChampion.value = ''
     }
 
-    onBeforeMount(async () => {
-      await champStore.getChampionList()
-    })
     return {
-      champStore,
+      props,
       selectedChampion,
       clickChampion,
       isChampBanned,
