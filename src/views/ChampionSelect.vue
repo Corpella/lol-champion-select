@@ -22,7 +22,7 @@
           <p class="text-2xl">30</p>
         </div>
         <div>
-          <GridHeader />
+          <GridHeader @queryUpdated="updateFilter" />
         </div>
         <div class="w-full text-center overflow-hidden">
           <!-- Champion pick component -->
@@ -146,6 +146,10 @@ export default defineComponent({
 
     const bannedChampions = computed(() => champStore.bannedChampions)
 
+    const updateFilter = (name: string): void => {
+      champStore.setFilter(name)
+    }
+
     const handleBan = ({ side, champ }: BanChampion): void => {
       champStore.banChampion(side, champ)
     }
@@ -158,6 +162,7 @@ export default defineComponent({
       filteredChampions,
       bannedChampions,
       handleBan,
+      updateFilter,
     }
   },
 })

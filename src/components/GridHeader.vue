@@ -32,19 +32,18 @@
 </template>
 
 <script lang="ts">
-import { useChampions } from '@/store/champions'
 import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'GridHeader',
-  setup() {
+  emits: ['queryUpdated'],
+  setup(props, { emit }) {
     const queryFilter = ref('')
-    const champStore = useChampions()
 
     watch(
       () => queryFilter.value,
       (val: string): void => {
-        champStore.setFilter(val)
+        emit('queryUpdated', val)
       }
     )
 
