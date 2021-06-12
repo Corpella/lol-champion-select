@@ -71,7 +71,7 @@ import Bans from '@/components/Bans.vue'
 import ChampionsGrid from '@/components/ChampionsGrid.vue'
 import GridHeader from '@/components/GridHeader.vue'
 import { useChampions } from '@/store/champions'
-import { Side } from '@/types'
+import { BanChampion } from '@/types/championSelect'
 import { computed, defineComponent } from 'vue'
 
 import TeamPicks from '@/components/TeamPicks.vue'
@@ -146,13 +146,7 @@ export default defineComponent({
 
     const bannedChampions = computed(() => champStore.bannedChampions)
 
-    const handleBan = ({
-      side,
-      champ,
-    }: {
-      side: Side
-      champ: string
-    }): void => {
+    const handleBan = ({ side, champ }: BanChampion): void => {
       champStore.banChampion(side, champ)
     }
 

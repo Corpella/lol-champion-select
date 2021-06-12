@@ -30,7 +30,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 
-import { ChampionPortrait } from '@/types'
+import { ChampionPortrait } from '@/types/championSelect'
 
 export default defineComponent({
   name: 'ChampionPortrait',

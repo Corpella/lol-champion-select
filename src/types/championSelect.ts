@@ -6,6 +6,11 @@ export type Position = 'left' | 'right'
 
 export type Champions = ChampionPortrait[]
 
+export interface BanChampion {
+    side: Side
+    champ: string
+}
+
 export interface ChampionPortrait {
     name: string,
     image: string,

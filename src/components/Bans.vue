@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { Champions, Side } from '@/types'
+import { Champions, Side } from '@/types/championSelect'
 import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({

@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { SingleChampion } from '@/types'
+import { SingleChampion } from '@/types/championSelect'
 import { defineComponent, PropType, ref } from 'vue'
 
 import ChampionsPortrait from './ChampionPortrait.vue'

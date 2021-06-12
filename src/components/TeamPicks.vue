@@ -38,7 +38,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 
-import { Side, Champions, Position } from '@/types'
+import { Side, Champions, Position } from '@/types/championSelect'
 import ChampionsPortrait from './ChampionPortrait.vue'
 
 export default defineComponent({
