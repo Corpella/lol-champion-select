@@ -20,10 +20,17 @@
       v-if="selected"
       class="cursor-pointer absolute z-20 rounded-full border-2 border-yellow-400 mx-5 overlay"
     ></div>
-    <div
+    <!-- <div
       v-if="selected"
       class="cursor-pointer absolute z-20 border-2 border-yellow-400 mx-5 overlay"
-    ></div>
+    ></div> -->
+    <HoverIcon
+      v-if="selected"
+      class="cursor-pointer absolute z-20 top-0 left-0 mx-5"
+      :width="70"
+      :height="70"
+      :color="'#fbbf24'"
+    />
   </div>
 </template>
 
@@ -31,9 +38,11 @@
 import { computed, defineComponent, PropType } from 'vue'
 
 import { ChampionPortrait } from '@/types/championSelect'
+import HoverIcon from './icons/HoverIcon.vue'
 
 export default defineComponent({
   name: 'ChampionPortrait',
+  components: { HoverIcon },
   props: {
     value: Object as PropType<ChampionPortrait>,
     clickable: {
