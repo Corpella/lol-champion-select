@@ -2,6 +2,8 @@
 
 export type Side = 'blue' | 'red'
 
+export type Phase = 'pick' | 'ban'
+
 export type Position = 'left' | 'right'
 
 export type Champions = ChampionPortrait[]

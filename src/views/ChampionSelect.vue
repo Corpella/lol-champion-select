@@ -1,15 +1,15 @@
 <template>
-  <div>
-    <div class="flex w-full mt-5">
-      <div id="blue-side" class="w-1/4 bg-blue-300">
-        <div class="w-full mx-5 mb-5">
+  <div class="w-full">
+    <div class="flex w-full select-none background-image text-gray-200 h-full">
+      <div id="blue-side" class="w-1/4">
+        <div class="w-full px-5 mb-5">
           <!-- Ban component -->
           <Bans :side="'blue'" :bans="bansBlue" />
         </div>
         <div class="flex flex-col justify-center">
           <!-- Team champions component  -->
           <TeamPicks
-            side="'blue'"
+            side="blue"
             :champions="championsBlue"
             :position="'left'"
           />
@@ -17,8 +17,8 @@
       </div>
 
       <div id="champion-list" class="w-1/2">
-        <div class="w-full text-center mb-5">
-          <p class="text-2xl mb-2">CHOOSE YOUR CHAMPION!</p>
+        <div class="w-full text-center mb-5 mt-3">
+          <p class="text-2xl">CHOOSE YOUR CHAMPION!</p>
           <p class="text-2xl">30</p>
         </div>
         <div>
@@ -29,27 +29,25 @@
           <ChampionsGrid
             :champions="filteredChampions"
             :bannedChampions="bannedChampions"
+            :phase="phase"
             @bannedChamp="handleBan"
           />
         </div>
       </div>
 
-      <div id="red-side" class="w-1/4 bg-red-300">
-        <div class="w-full mx-5 mb-5">
+      <div id="red-side" class="w-1/4 ">
+        <div class="w-full px-5 mb-5">
           <!-- Ban component -->
           <Bans :side="'red'" :bans="bansRed" />
         </div>
         <div class="flex flex-col justify-center">
           <!-- Team champions component  -->
-          <TeamPicks
-            side="'red'"
-            :champions="championsRed"
-            :position="'right'"
-          />
+          <TeamPicks side="red" :champions="championsRed" :position="'right'" />
         </div>
       </div>
     </div>
-    <!-- <div class="flex w-7/10 mt-3 justify-between mx-10">
+  </div>
+  <!-- <div class="flex w-7/10 mt-3 justify-between mx-10">
       <button
         @click="addBan('blue', 'viego')"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -63,7 +61,6 @@
         Add redside ban
       </button>
     </div> -->
-  </div>
 </template>
 
 <script lang="ts">
@@ -71,8 +68,8 @@ import Bans from '@/components/Bans.vue'
 import ChampionsGrid from '@/components/ChampionsGrid.vue'
 import GridHeader from '@/components/GridHeader.vue'
 import { useChampions } from '@/store/champions'
-import { BanChampion } from '@/types/championSelect'
-import { computed, defineComponent } from 'vue'
+import { BanChampion, Phase } from '@/types/championSelect'
+import { computed, defineComponent, ref } from 'vue'
 
 import TeamPicks from '@/components/TeamPicks.vue'
 
@@ -146,6 +143,8 @@ export default defineComponent({
 
     const bannedChampions = computed(() => champStore.bannedChampions)
 
+    const phase = ref<Phase>('ban')
+
     const updateFilter = (name: string): void => {
       champStore.setFilter(name)
     }
@@ -163,7 +162,14 @@ export default defineComponent({
       bannedChampions,
       handleBan,
       updateFilter,
+      phase,
     }
   },
 })
 </script>
+<style lang="scss">
+.background-image {
+  background-image: url('../assets/images/SummonersRift.png');
+  background-size: cover;
+}
+</style>

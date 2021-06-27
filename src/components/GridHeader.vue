@@ -20,7 +20,7 @@
             />
           </svg>
           <input
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline pl-10"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight h-8 focus:outline-none focus:shadow-outline pl-10"
             type="text"
             placeholder="Search"
             v-model="queryFilter"

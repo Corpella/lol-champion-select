@@ -17,8 +17,8 @@
     />
     <p class="text-sm" v-if="!hideName">{{ name }}</p>
     <div
-      v-if="selected"
-      class="cursor-pointer absolute z-20 rounded-full border-2 border-yellow-400 mx-5 overlay"
+      v-if="selected && gamePhase == 'pick'"
+      class="cursor-pointer absolute rounded-full border-2 border-yellow-400 mx-5 top-0 left-0 overlay"
     ></div>
     <!-- <div
       v-if="selected"
@@ -26,10 +26,13 @@
     ></div> -->
     <HoverIcon
       v-if="selected"
-      class="cursor-pointer absolute z-20 top-0 left-0 mx-5"
-      :width="70"
-      :height="70"
-      :color="'#fbbf24'"
+      class="cursor-pointer absolute top-0 left-0 mx-5"
+      :color="gamePhase == 'ban' ? '#b91c1c' : '#fbbf24'"
+    />
+    <BanIcon
+      v-if="selected && gamePhase == 'ban'"
+      class="cursor-pointer absolute top-0 left-0 mx-5"
+      :color="'#b91c1c'"
     />
   </div>
 </template>
@@ -37,12 +40,14 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 
-import { ChampionPortrait } from '@/types/championSelect'
+import { ChampionPortrait, Phase, Side } from '@/types/championSelect'
+
 import HoverIcon from './icons/HoverIcon.vue'
+import BanIcon from './icons/BanIcon.vue'
 
 export default defineComponent({
   name: 'ChampionPortrait',
-  components: { HoverIcon },
+  components: { HoverIcon, BanIcon },
   props: {
     value: Object as PropType<ChampionPortrait>,
     clickable: {
@@ -65,21 +70,21 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
-    side: {
-      type: String as PropType<'blue' | 'red'>,
-    },
+    side: String as PropType<Side>,
+    phase: String as PropType<Phase>,
   },
 
   setup(props) {
     // TODO Maybe put image size as a  prop?
 
-    const imageSize = 70
+    const imageSize = 80
     const imageSizePx = computed(() => `${imageSize}px`)
 
     return {
       props,
       name: props.value?.name,
       image: props.value?.image,
+      gamePhase: props.phase,
       imageSize,
       imageSizePx,
     }
@@ -94,8 +99,6 @@ export default defineComponent({
 .overlay {
   width: v-bind(imageSizePx);
   height: v-bind(imageSizePx);
-  top: 0;
-  left: 0;
 }
 .hover-effects:hover {
   @apply border-2;

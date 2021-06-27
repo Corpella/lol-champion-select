@@ -1,5 +1,5 @@
 <template>
-  <div id="cs-container" class="w-full bg-green-400" v-if="props.champions">
+  <div id="cs-container" class="w-full px-10" v-if="props.champions">
     <div class="grid grid-cols-6 mt-10">
       <div
         v-for="(c, i) in props.champions"
@@ -7,21 +7,22 @@
         class="justify-self-center"
       >
         <ChampionsPortrait
-          :key="c.name"
           class="mb-2"
+          :key="c.name"
           clickable
+          :phase="props.phase"
           :selected="c.id == selectedChampion"
           :disabled="isChampBanned(c.id)"
-          @click="clickChampion(c.id)"
           :value="{
             name: c.name,
             image: `https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/${c.id.toLowerCase()}.png`,
           }"
+          @click="clickChampion(c.id)"
         />
       </div>
     </div>
   </div>
-  <div class="mt-5">
+  <div class="mt-10 mb-5">
     <button
       @click="banChampion"
       class="text-white font-bold py-2 px-4 rounded"
@@ -36,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { SingleChampion } from '@/types/championSelect'
+import { Phase, SingleChampion } from '@/types/championSelect'
 import { defineComponent, PropType, ref } from 'vue'
 
 import ChampionsPortrait from './ChampionPortrait.vue'
@@ -48,6 +49,7 @@ export default defineComponent({
   props: {
     champions: Array as PropType<SingleChampion[]>,
     bannedChampions: { type: Array as PropType<string[]>, required: true },
+    phase: String as PropType<Phase>,
   },
 
   setup(props, { emit }) {
