@@ -87,9 +87,15 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style lang="postcss">
 #cs-container {
   height: 700px;
   overflow-y: scroll;
+}
+#cs-container::-webkit-scrollbar {
+  @apply w-2;
+}
+#cs-container::-webkit-scrollbar-thumb {
+  @apply bg-yellow-500 rounded-2xl;
 }
 </style>
