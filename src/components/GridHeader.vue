@@ -7,7 +7,7 @@
         <div class="flex w-full relative">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-8 w-8 absolute top-1/2 left-0 ml-1 transform -translate-y-1/2"
+            class="h-6 w-6 absolute top-1/2 left-0 ml-1 transform -translate-y-1/2"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -20,7 +20,7 @@
             />
           </svg>
           <input
-            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight h-8 focus:outline-none focus:shadow-outline pl-10"
+            class="shadow bg-transparent border-yellow-500 appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight h-8 focus:outline-none focus:shadow-outline pl-10"
             type="text"
             placeholder="Search"
             v-model="queryFilter"
