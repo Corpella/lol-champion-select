@@ -1,6 +1,7 @@
 <template>
-  <div class="w-full">
-    <div class="flex w-full select-none background-image text-gray-200 h-full">
+  <div class="relative w-full">
+    <div class="absolute w-full min-h-screen h-full background-image" />
+    <div class="flex w-full select-none text-gray-200 h-full">
       <div id="blue-side" class="w-1/4">
         <div class="w-full px-5 mb-5">
           <!-- Ban component -->
@@ -169,7 +170,9 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .background-image {
+  z-index: -1;
   background-image: url('../assets/images/SummonersRift.png');
   background-size: cover;
+  filter: brightness(40%);
 }
 </style>
