@@ -3,7 +3,7 @@
     <div class="w-1/2"></div>
     <div class="flex w-1/2">
       <div class="w-2/5"></div>
-      <div class="w-3/5">
+      <div class="w-3/5 mr-16">
         <div class="flex w-full relative">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +20,7 @@
             />
           </svg>
           <input
-            class="shadow bg-transparent border-yellow-500 appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight h-8 focus:outline-none focus:shadow-outline pl-10"
+            class="shadow bg-transparent border-yellow-200 appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight h-8 focus:outline-none focus:shadow-outline pl-10"
             type="text"
             placeholder="Search"
             v-model="queryFilter"
@@ -29,12 +29,17 @@
       </div>
     </div>
   </div>
+  <div class="mr-16 ml-14">
+    <Divider />
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
+import Divider from './Divider.vue'
 
 export default defineComponent({
+  components: { Divider },
   name: 'GridHeader',
   emits: ['queryUpdated'],
   setup(props, { emit }) {

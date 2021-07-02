@@ -79,7 +79,13 @@ import Background from '@/components/Background.vue'
 
 export default defineComponent({
   name: 'ChampionSelect',
-  components: { TeamPicks, ChampionsGrid, GridHeader, Bans, Background },
+  components: {
+    TeamPicks,
+    ChampionsGrid,
+    GridHeader,
+    Bans,
+    Background,
+  },
   setup() {
     const championsBlue = [
       {

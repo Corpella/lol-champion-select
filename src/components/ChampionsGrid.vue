@@ -1,6 +1,6 @@
 <template>
-  <div id="cs-container" class="w-full px-10" v-if="props.champions">
-    <div class="grid grid-cols-6 mt-10">
+  <div class="w-full px-5" v-if="props.champions">
+    <div id="cs-container" class="grid grid-cols-6 mt-3">
       <div
         v-for="(c, i) in props.champions"
         :key="i"
@@ -89,13 +89,13 @@ export default defineComponent({
 
 <style lang="postcss">
 #cs-container {
-  height: 700px;
+  height: 650px;
   overflow-y: scroll;
 }
 #cs-container::-webkit-scrollbar {
   @apply w-2;
 }
 #cs-container::-webkit-scrollbar-thumb {
-  @apply bg-yellow-500 rounded-2xl;
+  @apply bg-yellow-500 bg-opacity-60 rounded-2xl;
 }
 </style>
