@@ -1,8 +1,11 @@
 <template>
-  <div class="relative w-full">
-    <Background />
-
-    <div class="flex w-full select-none text-gray-200 h-full">
+  <div class="relative w-full select-none">
+    <Background
+      style="z-index: -1;"
+      :phase="phase"
+      :champion="hoveredChampion"
+    />
+    <div class="flex w-full  text-gray-200 h-full z-50">
       <div id="blue-side" class="w-1/4">
         <div class="w-full px-5 mb-5">
           <!-- Ban component -->
@@ -33,6 +36,7 @@
             :bannedChampions="bannedChampions"
             :phase="phase"
             @bannedChamp="handleBan"
+            @championHovered="handleHover"
           />
         </div>
       </div>
@@ -153,7 +157,13 @@ export default defineComponent({
 
     const bannedChampions = computed(() => champStore.bannedChampions)
 
-    const phase = ref<Phase>('ban')
+    const phase = ref<Phase>('pick')
+
+    const hoveredChampion = ref<string>('')
+
+    const handleHover = (champId: string): void => {
+      hoveredChampion.value = champId
+    }
 
     const updateFilter = (name: string): void => {
       champStore.setFilter(name)
@@ -161,6 +171,7 @@ export default defineComponent({
 
     const handleBan = ({ side, champ }: BanChampion): void => {
       champStore.banChampion(side, champ)
+      hoveredChampion.value = ''
     }
 
     return {
@@ -173,6 +184,8 @@ export default defineComponent({
       handleBan,
       updateFilter,
       phase,
+      handleHover,
+      hoveredChampion,
     }
   },
 })

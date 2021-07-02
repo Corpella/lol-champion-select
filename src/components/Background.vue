@@ -1,33 +1,50 @@
 <template>
-  <div class="absolute w-full min-h-screen h-full background-image" />
+  <div class="absolute w-full min-h-screen h-full">
+    <img
+      class="absolute w-full h-full image"
+      v-if="props.phase == 'pick' && props.champion"
+      :src="championStyle"
+    />
+    <img
+      v-else
+      class="absolute w-full h-full image"
+      src="../assets/images/SummonersRift.png"
+      alt="summonersRift"
+    />
+    <div class="absolute w-full h-full blur" style="z-index: -1;"></div>
+  </div>
 </template>
 
 <script lang="ts">
 import { Phase } from '@/types/championSelect'
-import { defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 
 export default defineComponent({
   name: 'Background',
   props: {
+    champion: String,
     phase: String as PropType<Phase>,
   },
   setup(props) {
+    const championStyle = computed(
+      () =>
+        `https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/backgrounds/${props.champion?.toLowerCase()}.jpg`
+    )
+
     return {
       props,
+      championStyle,
     }
   },
 })
 </script>
-<style lang="scss">
-.background-image {
-  z-index: -1;
-  background-image: -webkit-radial-gradient(
-      circle,
-      transparent,
-      rgb(21, 18, 71)
-    ),
-    url('../assets/images/SummonersRift.png');
-  background-size: cover;
+<style lang="postcss">
+.image {
+  z-index: -10;
   filter: brightness(40%);
+}
+.blur {
+  z-index: -1;
+  background: -webkit-radial-gradient(circle, transparent, rgb(14, 12, 44));
 }
 </style>

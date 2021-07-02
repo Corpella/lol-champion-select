@@ -45,7 +45,7 @@ import ChampionsPortrait from './ChampionPortrait.vue'
 export default defineComponent({
   name: 'ChampionsGrid',
   components: { ChampionsPortrait },
-  emits: ['bannedChamp'],
+  emits: ['bannedChamp', 'championHovered'],
   props: {
     champions: Array as PropType<SingleChampion[]>,
     bannedChampions: { type: Array as PropType<string[]>, required: true },
@@ -60,6 +60,7 @@ export default defineComponent({
         return
       }
       selectedChampion.value = champId
+      emit('championHovered', champId)
     }
 
     //TODO Fix name/id confusion around types
