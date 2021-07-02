@@ -1,6 +1,7 @@
 <template>
   <div class="relative w-full">
-    <div class="absolute w-full min-h-screen h-full background-image" />
+    <Background />
+
     <div class="flex w-full select-none text-gray-200 h-full">
       <div id="blue-side" class="w-1/4">
         <div class="w-full px-5 mb-5">
@@ -65,18 +66,20 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+
+import { useChampions } from '@/store/champions'
+import { BanChampion, Phase } from '@/types/championSelect'
+
 import Bans from '@/components/Bans.vue'
 import ChampionsGrid from '@/components/ChampionsGrid.vue'
 import GridHeader from '@/components/GridHeader.vue'
-import { useChampions } from '@/store/champions'
-import { BanChampion, Phase } from '@/types/championSelect'
-import { computed, defineComponent, ref } from 'vue'
-
 import TeamPicks from '@/components/TeamPicks.vue'
+import Background from '@/components/Background.vue'
 
 export default defineComponent({
   name: 'ChampionSelect',
-  components: { TeamPicks, ChampionsGrid, GridHeader, Bans },
+  components: { TeamPicks, ChampionsGrid, GridHeader, Bans, Background },
   setup() {
     const championsBlue = [
       {
@@ -168,11 +171,4 @@ export default defineComponent({
   },
 })
 </script>
-<style lang="scss">
-.background-image {
-  z-index: -1;
-  background-image: url('../assets/images/SummonersRift.png');
-  background-size: cover;
-  filter: brightness(40%);
-}
-</style>
+<style lang="scss"></style>
