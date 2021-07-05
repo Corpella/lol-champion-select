@@ -11,7 +11,18 @@
       src="../assets/images/SummonersRift.png"
       alt="summonersRift"
     />
-    <div class="absolute w-full h-full blur" style="z-index: -1;"></div>
+    <!-- <img
+      v-else
+      class="absolute w-full h-full image"
+      src="https://i.imgur.com/2Qyocz8.png"
+      alt="summonersRift"
+    /> -->
+
+    <div
+      class="absolute w-full h-full"
+      :class="`blur-${props.phase}`"
+      style="z-index: -1;"
+    ></div>
   </div>
 </template>
 
@@ -43,8 +54,12 @@ export default defineComponent({
   z-index: -10;
   filter: brightness(40%);
 }
-.blur {
+.blur-pick {
   z-index: -1;
   background: -webkit-radial-gradient(circle, transparent, rgb(14, 12, 44));
+}
+.blur-ban {
+  z-index: -1;
+  background: -webkit-radial-gradient(circle, transparent, rgba(70, 14, 14, 0.87));
 }
 </style>
