@@ -28,7 +28,13 @@
           </div>
         </template>
         <template v-else>
-          <div class="rounded-full bg-black empty-portrait mx-5" />
+          <div
+            class="rounded-full bg-black empty-portrait mx-5"
+            :class="{
+              'border-2 border-yellow-400': side == 'blue',
+              'border-2 border-red-700': side == 'red',
+            }"
+          />
           <div class="self-center">
             <p class="font-bold">
               Something...
@@ -42,36 +48,26 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script lang="ts" setup>
+import { defineProps, PropType } from 'vue'
 
 import { Side, Champions, Position } from '@/types/championSelect'
 import ChampionsPortrait from './ChampionPortrait.vue'
 import Divider from './Divider.vue'
 
-export default defineComponent({
-  name: 'TeamPicks',
-  components: { ChampionsPortrait, Divider },
-  props: {
-    side: String as PropType<Side>,
-    position: String as PropType<Position>,
-    champions: Array as PropType<Champions>,
-  },
-  setup(props) {
-    const firstLetterUppercase = (name: string): string =>
-      name.charAt(0).toUpperCase() + name.slice(1)
-
-    return {
-      props,
-      firstLetterUppercase,
-    }
-  },
+const props = defineProps({
+  side: String as PropType<Side>,
+  position: String as PropType<Position>,
+  champions: Array as PropType<Champions>,
 })
+
+const firstLetterUppercase = (name: string): string =>
+  name.charAt(0).toUpperCase() + name.slice(1)
 </script>
 
 <style lang="scss">
 .empty-portrait {
-  width: 70px;
-  height: 70px;
+ width:80px;
+ height:80px;
 }
 </style>

@@ -2,15 +2,18 @@
   <div class="absolute w-full min-h-screen h-full">
     <img
       class="absolute w-full h-full image"
-      v-if="props.phase == 'pick' && props.champion"
-      :src="championStyle"
+      :src="
+        props.champion && props.phase == 'pick'
+          ? championStyle
+          : 'https://i.imgur.com/2Qyocz8.png'
+      "
     />
-    <img
+    <!-- <img
       v-else
       class="absolute w-full h-full image"
       src="../assets/images/SummonersRift.png"
       alt="summonersRift"
-    />
+    /> -->
     <!-- <img
       v-else
       class="absolute w-full h-full image"
@@ -34,7 +37,7 @@ export default defineComponent({
   name: 'Background',
   props: {
     champion: String,
-    phase: String as PropType<Phase>,
+    phase: { type: String as PropType<Phase>, required: true },
   },
   setup(props) {
     const championStyle = computed(
@@ -60,6 +63,10 @@ export default defineComponent({
 }
 .blur-ban {
   z-index: -1;
-  background: -webkit-radial-gradient(circle, transparent, rgba(70, 14, 14, 0.87));
+  background: -webkit-radial-gradient(
+    circle,
+    transparent,
+    rgba(70, 14, 14, 0.87)
+  );
 }
 </style>

@@ -21,7 +21,7 @@
     <p class="text-sm" v-if="!hideName">{{ name }}</p>
     <div
       v-if="selected && gamePhase == 'pick'"
-      class="cursor-pointer absolute rounded-full border-2 border-yellow-400 mx-5 top-0 left-0 overlay"
+      class="absolute top-0 left-0 cursor-pointer rounded-full border-2 border-yellow-400 mx-5 overlay"
     />
     <!-- <div
       v-if="selected"
@@ -115,11 +115,9 @@ export default defineComponent({
   height: v-bind(imageSizePx);
 }
 .hover-effects-pick:hover {
-  @apply border-2;
-  @apply border-yellow-400;
+  @apply border-2 border-yellow-400;
 }
 .hover-effects-ban:hover {
-  @apply border-2;
-  @apply border-red-700;
+  @apply border-2 border-red-700;
 }
 </style>

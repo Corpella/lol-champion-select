@@ -91,60 +91,12 @@ export default defineComponent({
     Background,
   },
   setup() {
-    const championsBlue = [
-      {
-        name: 'tryndamere',
-        image:
-          'https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/tryndamere.png',
-      },
-      {
-        name: 'sejuani',
-        image:
-          'https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/sejuani.png',
-      },
-      {
-        name: 'anivia',
-        image:
-          'https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/anivia.png',
-      },
-      {
-        name: 'ashe',
-        image:
-          'https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/ashe.png',
-      },
-      {
-        name: 'braum',
-        image:
-          'https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/braum.png',
-      },
+    const championsBlue:any[] = [
+     
     ]
 
-    const championsRed = [
-      {
-        name: 'singed',
-        image:
-          'https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/singed.png',
-      },
-      {
-        name: 'vi',
-        image:
-          'https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/vi.png',
-      },
-      {
-        name: 'viktor',
-        image:
-          'https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/viktor.png',
-      },
-      {
-        name: 'jinx',
-        image:
-          'https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/jinx.png',
-      },
-      {
-        name: 'janna',
-        image:
-          'https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/janna.png',
-      },
+    const championsRed:any[] = [
+     
     ]
     const champStore = useChampions()
 
@@ -157,9 +109,11 @@ export default defineComponent({
 
     const bannedChampions = computed(() => champStore.bannedChampions)
 
-    const phase = ref<Phase>('pick')
+    const phase = ref<Phase>('ban')
 
     const hoveredChampion = ref<string>('')
+
+    //TODO maybe try Vue 3 multiple v-bind?
 
     const handleHover = (champId: string): void => {
       hoveredChampion.value = champId
