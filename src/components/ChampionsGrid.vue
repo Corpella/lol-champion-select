@@ -1,13 +1,8 @@
 <template>
   <div class="w-full px-5" v-if="props.champions">
-    <div id="cs-container" class="grid grid-cols-6 mt-3">
-      <div
-        v-for="(c, i) in props.champions"
-        :key="i"
-        class="justify-self-center"
-      >
+    <div id="cs-container" class="">
+      <div v-for="(c, i) in props.champions" :key="i" class="portrait-wrapper">
         <ChampionsPortrait
-          class="mb-2"
           :key="c.name"
           clickable
           :phase="props.phase"
@@ -37,15 +32,15 @@
 </template>
 
 <script lang="ts">
-import { Phase, SingleChampion } from '@/types/championSelect'
-import { defineComponent, PropType, ref } from 'vue'
+import { Phase, SingleChampion } from "@/types/championSelect";
+import { defineComponent, PropType, ref } from "vue";
 
-import ChampionsPortrait from './ChampionPortrait.vue'
+import ChampionsPortrait from "./ChampionPortrait.vue";
 
 export default defineComponent({
-  name: 'ChampionsGrid',
+  name: "ChampionsGrid",
   components: { ChampionsPortrait },
-  emits: ['bannedChamp', 'championHovered'],
+  emits: ["bannedChamp", "championHovered"],
   props: {
     champions: Array as PropType<SingleChampion[]>,
     bannedChampions: { type: Array as PropType<string[]>, required: true },
@@ -53,29 +48,29 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const selectedChampion = ref('')
+    const selectedChampion = ref("");
 
     const clickChampion = (champId: string): void => {
       if (isChampBanned(champId)) {
-        return
+        return;
       }
-      selectedChampion.value = champId
-      emit('championHovered', champId)
-    }
+      selectedChampion.value = champId;
+      emit("championHovered", champId);
+    };
 
     //TODO Fix name/id confusion around types
 
     const isChampBanned = (name: string): boolean => {
-      return props.bannedChampions.includes(name.toLowerCase())
-    }
+      return props.bannedChampions.includes(name.toLowerCase());
+    };
 
     const banChampion = () => {
-      emit('bannedChamp', {
-        side: 'blue',
+      emit("bannedChamp", {
+        side: "blue",
         champ: selectedChampion.value.toLowerCase(),
-      })
-      selectedChampion.value = ''
-    }
+      });
+      selectedChampion.value = "";
+    };
 
     return {
       props,
@@ -83,20 +78,24 @@ export default defineComponent({
       clickChampion,
       isChampBanned,
       banChampion,
-    }
+    };
   },
-})
+});
 </script>
 
 <style lang="postcss">
 #cs-container {
-  height: 650px;
-  overflow-y: scroll;
+  height: 65vh;
+  grid-auto-rows: 110px;
+  @apply grid grid-cols-6 mt-3 overflow-y-scroll;
 }
 #cs-container::-webkit-scrollbar {
   @apply w-2;
 }
 #cs-container::-webkit-scrollbar-thumb {
   @apply bg-yellow-500 bg-opacity-60 rounded-2xl;
+}
+.portrait-wrapper {
+  max-height: 100px;
 }
 </style>

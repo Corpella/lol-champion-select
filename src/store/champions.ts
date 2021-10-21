@@ -22,7 +22,7 @@ export const useChampions = defineStore({
     },
     actions: {
         getChampionList() {
-            fetch("http://ddragon.leagueoflegends.com/cdn/11.12.1/data/en_US/champion.json")
+            fetch("http://ddragon.leagueoflegends.com/cdn/11.19.1/data/en_US/champion.json")
                 .then((res) => res.json())
                 .then((response) => {
                     const championsData = Object.values(response.data) as SingleChampion[]

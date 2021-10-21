@@ -28,3 +28,5 @@ export interface TeamPicks {
     side: Side,
     champions: Champions
 }
+
+export type Status = 'BANBLUE' | 'BANRED' | 'PICKBLUE' | 'PICKRED'
