@@ -1,6 +1,6 @@
 <template>
     <div class="w-full flex mb-2">
-        <div class="w-1/2"></div>
+        <div class="w-1/2" />
         <div class="flex w-1/2">
             <div class="w-2/5"></div>
             <div class="w-3/5 mr-16">
@@ -20,10 +20,10 @@
                         />
                     </svg>
                     <input
+                        v-model="queryFilter"
                         class="shadow bg-transparent border-yellow-200 appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight h-8 focus:outline-none focus:shadow-outline pl-10"
                         type="text"
                         placeholder="Search"
-                        v-model="queryFilter"
                     />
                 </div>
             </div>
@@ -34,27 +34,15 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, watch } from "vue"
+<script lang="ts" setup>
+import { ref, watch } from "vue"
 import Divider from "./Divider.vue"
 
-export default defineComponent({
-    components: { Divider },
-    name: "GridHeader",
-    emits: ["queryUpdated"],
-    setup(props, { emit }) {
-        const queryFilter = ref("")
+const emit = defineEmits(["queryUpdated"])
 
-        watch(
-            () => queryFilter.value,
-            (val: string): void => {
-                emit("queryUpdated", val)
-            },
-        )
+const queryFilter = ref("")
 
-        return { queryFilter }
-    },
+watch(queryFilter, (val: string): void => {
+    emit("queryUpdated", val)
 })
 </script>
-
-<style></style>
