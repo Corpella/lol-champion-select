@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <!-- <img
+    <div class="home">
+        <!-- <img
       class="rounded-full"
       width="44"
       height="44"
@@ -9,22 +9,15 @@
       "
       alt=""
     /> -->
-  </div>
+    </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted } from 'vue'
-import { useChampions } from '@/store/champions'
+<script lang="ts" setup>
+// import { onMounted } from "vue"
+// import { useChampions } from '@/store/champions'
 
-export default defineComponent({
-  name: 'Home',
-  components: {},
-  setup() {
-    const champStore = useChampions()
-    onMounted(() => {
-      // champions.getChampionList()
-    })
-    return { champStore }
-  },
-})
+//     const champStore = useChampions()
+//     onMounted(() => {
+//        champions.getChampionList()
+//     })
 </script>
