@@ -1,14 +1,12 @@
 <template>
     <div class="relative w-full select-none">
-        <Background style="z-index: -1;" :phase="phase" :champion="hoveredChampion" />
-        <div class="flex w-full  text-gray-200 h-full z-50">
+        <Background style="z-index: -1" :phase="phase" :champion="hoveredChampion" />
+        <div class="flex w-full text-gray-200 h-full z-50">
             <div id="blue-side" class="w-1/4">
                 <div class="w-full px-5 mb-5">
-                    <!-- Ban component -->
-                    <Bans :side="'blue'" :bans="bansBlue" />
+                    <Bans side="blue" :bans="champStore.bans.blue" />
                 </div>
                 <div class="flex flex-col justify-center">
-                    <!-- Team champions component  -->
                     <TeamPicks side="blue" :champions="championsBlue" :position="'left'" />
                 </div>
             </div>
@@ -22,25 +20,22 @@
                     <GridHeader @queryUpdated="updateFilter" />
                 </div>
                 <div class="w-full text-center overflow-hidden">
-                    <!-- Champion pick component -->
                     <ChampionsGrid
-                        :champions="filteredChampions"
-                        :bannedChampions="bannedChampions"
+                        v-model:hoveredChampion="hoveredChampion"
+                        :champions="champStore.filteredChampions"
+                        :bannedChampions="champStore.bannedChampions"
                         :phase="phase"
                         @bannedChamp="handleBan"
-                        @championHovered="handleHover"
                     />
                 </div>
             </div>
 
-            <div id="red-side" class="w-1/4 ">
+            <div id="red-side" class="w-1/4">
                 <div class="w-full px-5 mb-5">
-                    <!-- Ban component -->
-                    <Bans :side="'red'" :bans="bansRed" />
+                    <Bans side="red" :bans="champStore.bans.red" />
                 </div>
                 <div class="flex flex-col justify-center">
-                    <!-- Team champions component  -->
-                    <TeamPicks side="red" :champions="championsRed" :position="'right'" />
+                    <TeamPicks side="red" :champions="championsRed" position="right" />
                 </div>
             </div>
         </div>
@@ -61,11 +56,11 @@
     </div> -->
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, ref } from "vue"
+<script lang="ts" setup>
+import { ref } from "vue"
 
 import { useChampions } from "@/store/champions"
-import { BanChampion, Phase } from "@/types/championSelect.types"
+import { BanChampion, Champions, Phase } from "@/types/championSelect.types"
 
 import Bans from "@/components/Bans.vue"
 import ChampionsGrid from "@/components/ChampionsGrid.vue"
@@ -73,63 +68,23 @@ import GridHeader from "@/components/GridHeader.vue"
 import TeamPicks from "@/components/TeamPicks.vue"
 import Background from "@/components/Background.vue"
 
-export default defineComponent({
-    name: "ChampionSelect",
-    components: {
-        TeamPicks,
-        ChampionsGrid,
-        GridHeader,
-        Bans,
-        Background,
-    },
-    setup() {
-        const championsBlue: any[] = []
+const champStore = useChampions()
 
-        const championsRed: any[] = []
-        const champStore = useChampions()
+const championsBlue: Champions = []
+const championsRed: Champions = []
 
-        champStore.getChampionList()
+champStore.getChampionList()
 
-        const bansBlue = champStore.bans.blue
-        const bansRed = champStore.bans.red
+const phase = ref<Phase>("pick")
 
-        const filteredChampions = computed(() => champStore.filteredChampions)
+const hoveredChampion = ref<string>("")
 
-        const bannedChampions = computed(() => champStore.bannedChampions)
+const updateFilter = (name: string): void => {
+    champStore.setFilter(name)
+}
 
-        const phase = ref<Phase>("pick")
-
-        const hoveredChampion = ref<string>("")
-
-        //TODO maybe try Vue 3 multiple v-bind?
-
-        const handleHover = (champId: string): void => {
-            hoveredChampion.value = champId
-        }
-
-        const updateFilter = (name: string): void => {
-            champStore.setFilter(name)
-        }
-
-        const handleBan = ({ side, champ }: BanChampion): void => {
-            champStore.banChampion(side, champ)
-            hoveredChampion.value = ""
-        }
-
-        return {
-            championsBlue,
-            championsRed,
-            bansBlue,
-            bansRed,
-            filteredChampions,
-            bannedChampions,
-            handleBan,
-            updateFilter,
-            phase,
-            handleHover,
-            hoveredChampion,
-        }
-    },
-})
+const handleBan = ({ side, champ }: BanChampion): void => {
+    champStore.banChampion(side, champ)
+    hoveredChampion.value = ""
+}
 </script>
-<style lang="scss"></style>
