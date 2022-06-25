@@ -5,7 +5,7 @@
             <div class="flex" :class="{ 'flex-row-reverse': position == 'right' }">
                 <template v-if="champions && champions[i - 1]">
                     <div>
-                        <ChampionsPortrait :value="champions[i - 1]" hideName rounded :side="side" />
+                        <ChampionsPortrait hideName rounded :value="champions[i - 1]" :side="side" />
                     </div>
                     <div class="self-center">
                         <p class="font-bold">
@@ -23,9 +23,7 @@
                         }"
                     />
                     <div class="self-center">
-                        <p class="font-bold">
-                            Something...
-                        </p>
+                        <p class="font-bold">Something...</p>
                         <p class="">Summoner {{ i }}</p>
                     </div>
                 </template>
@@ -42,7 +40,7 @@ import { Side, Champions, Position } from "@/types/championSelect.types"
 import ChampionsPortrait from "./ChampionPortrait.vue"
 import Divider from "./Divider.vue"
 
-const props = defineProps({
+defineProps({
     side: String as PropType<Side>,
     position: String as PropType<Position>,
     champions: Array as PropType<Champions>,

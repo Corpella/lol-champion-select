@@ -3,12 +3,12 @@
         <div id="cs-container" class="">
             <div v-for="(c, i) in champions" :key="i" class="portrait-wrapper">
                 <ChampionsPortrait
-                    :key="c.name"
                     clickable
+                    :key="c.name"
                     :phase="phase"
                     :selected="c.id == hoveredChampion"
                     :disabled="isChampBanned(c.id)"
-                    :value="{
+                    :champion="{
                         name: c.name,
                         image: `https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/${c.id.toLowerCase()}.png`,
                     }"
@@ -69,13 +69,16 @@ const banChampion = () => {
 #cs-container {
     height: 65vh;
     grid-auto-rows: 110px;
-    @apply grid grid-cols-6 mt-3 overflow-y-scroll;
+    @apply grid grid-cols-6 pt-3 overflow-y-scroll gap-1;
 }
 #cs-container::-webkit-scrollbar {
-    @apply w-2;
+    @apply w-2 max-h-2;
 }
 #cs-container::-webkit-scrollbar-thumb {
     @apply bg-yellow-500 bg-opacity-60 rounded-2xl;
+}
+#cs-container::-webkit-scrollbar-corner {
+    background-color: rgba(0, 0, 0, 0);
 }
 .portrait-wrapper {
     max-height: 100px;
