@@ -1,12 +1,12 @@
 <template>
-    <div class="w-full px-5" v-if="props.champions">
+    <div class="w-full px-5" v-if="champions?.length">
         <div id="cs-container" class="">
-            <div v-for="(c, i) in props.champions" :key="i" class="portrait-wrapper">
+            <div v-for="(c, i) in champions" :key="i" class="portrait-wrapper">
                 <ChampionsPortrait
                     :key="c.name"
                     clickable
-                    :phase="props.phase"
-                    :selected="c.id == selectedChampion"
+                    :phase="phase"
+                    :selected="c.id == hoveredChampion"
                     :disabled="isChampBanned(c.id)"
                     :value="{
                         name: c.name,
@@ -21,67 +21,51 @@
         <button
             @click="banChampion"
             class="text-white font-bold py-2 px-4 rounded"
-            :class="selectedChampion ? 'bg-blue-500 hover:bg-blue-700' : ' bg-gray-500'"
-            :disabled="!selectedChampion"
+            :class="hoveredChampion ? 'bg-blue-500 hover:bg-blue-700' : ' bg-gray-500'"
+            :disabled="!hoveredChampion"
         >
             Ban champion
         </button>
     </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { Phase, SingleChampion } from "@/types/championSelect.types"
-import { defineComponent, PropType, ref } from "vue"
+import { PropType } from "vue"
 
 import ChampionsPortrait from "./ChampionPortrait.vue"
 
-export default defineComponent({
-    name: "ChampionsGrid",
-    components: { ChampionsPortrait },
-    emits: ["bannedChamp", "championHovered"],
-    props: {
-        champions: Array as PropType<SingleChampion[]>,
-        bannedChampions: { type: Array as PropType<string[]>, required: true },
-        phase: String as PropType<Phase>,
-    },
-
-    setup(props, { emit }) {
-        const selectedChampion = ref("")
-
-        const clickChampion = (champId: string): void => {
-            if (isChampBanned(champId)) {
-                return
-            }
-            selectedChampion.value = champId
-            emit("championHovered", champId)
-        }
-
-        //TODO Fix name/id confusion around types
-
-        const isChampBanned = (name: string): boolean => {
-            return props.bannedChampions.includes(name.toLowerCase())
-        }
-
-        const banChampion = () => {
-            emit("bannedChamp", {
-                side: "blue",
-                champ: selectedChampion.value.toLowerCase(),
-            })
-            selectedChampion.value = ""
-        }
-
-        return {
-            props,
-            selectedChampion,
-            clickChampion,
-            isChampBanned,
-            banChampion,
-        }
-    },
+const emit = defineEmits(["bannedChamp", "update:hoveredChampion"])
+const props = defineProps({
+    champions: Array as PropType<SingleChampion[]>,
+    bannedChampions: { type: Array as PropType<string[]>, required: true },
+    phase: String as PropType<Phase>,
+    hoveredChampion: { type: String, default: "" },
 })
+
+const clickChampion = (champId: string): void => {
+    if (isChampBanned(champId)) {
+        return
+    }
+    emit("update:hoveredChampion", champId)
+}
+
+//TODO: Fix name/id confusion around types
+
+const isChampBanned = (name: string): boolean => {
+    return props.bannedChampions.includes(name.toLowerCase())
+}
+
+const banChampion = () => {
+    emit("bannedChamp", {
+        side: "blue",
+        champ: props.hoveredChampion.toLowerCase(),
+    })
+    emit("update:hoveredChampion", "")
+}
 </script>
 
-<style lang="postcss">
+<style lang="scss">
 #cs-container {
     height: 65vh;
     grid-auto-rows: 110px;
