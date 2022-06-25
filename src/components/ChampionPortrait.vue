@@ -1,123 +1,94 @@
 <template>
-  <div class="relative">
-    <img
-      :class="[
-        {
-          grayscale: props.disabled || selected,
-          'rounded-full': props.rounded,
-          'border-2 border-yellow-400': side == 'blue',
-          'border-2 border-red-700': side == 'red',
-          'border border-red-700': props.phase == 'ban',
-        },
-        hoverBorder,
-      ]"
-      class="mx-5 z-10"
-      :key="name"
-      :src="image"
-      :alt="name"
-      :width="imageSize"
-      :height="imageSize"
-    />
-    <p class="text-sm" v-if="!hideName">{{ name }}</p>
-    <div
-      v-if="selected && gamePhase == 'pick'"
-      class="absolute top-0 left-0 cursor-pointer rounded-full border-2 border-yellow-400 mx-5 overlay"
-    />
-    <!-- <div
-      v-if="selected"
-      class="cursor-pointer absolute z-20 border-2 border-yellow-400 mx-5 overlay"
-    ></div> -->
-    <HoverIcon
-      :width="imageSize"
-      :height="imageSize"
-      v-if="selected"
-      class="cursor-pointer absolute top-0 left-0 mx-5"
-      :color="gamePhase == 'ban' ? '#b91c1c' : '#fbbf24'"
-    />
-    <BanIcon
-      :width="imageSize"
-      :height="imageSize"
-      v-if="selected && gamePhase == 'ban'"
-      class="cursor-pointer absolute top-0 left-0 mx-5"
-      :color="'#b91c1c'"
-    />
-  </div>
+    <div class="relative">
+        <div class="w-full flex flex-col justify-center">
+            <img
+                class="z-10 aspect-square self-center"
+                :class="[
+                    {
+                        grayscale: props.disabled || selected,
+                        'rounded-full': props.rounded,
+                        'border-2 border-yellow-400': side == 'blue',
+                        'border-2 border-red-700': side == 'red',
+                        'border border-red-700': props.phase == 'ban',
+                    },
+                    clickable && props.phase && `cursor-pointer hover-effects${props.phase}`,
+                ]"
+                :key="champion?.name"
+                :src="champion?.image"
+                :alt="champion?.name"
+                :width="imageSize"
+            />
+            <p class="text-sm text-center" v-if="!hideName">{{ champion?.name }}</p>
+            <div
+                v-if="selected && phase == 'pick'"
+                class="z-50 absolute top-0 left-1/2 -translate-x-1/2 cursor-pointer rounded-full border-2 border-yellow-400 overlay aspect-square"
+            />
+            <HoverIcon
+                :width="imageSize"
+                v-if="selected"
+                class="z-50 cursor-pointer absolute top-0 left-1/2 -translate-x-1/2"
+                :color="phase == 'ban' ? '#b91c1c' : '#fbbf24'"
+            />
+            <BanIcon
+                :width="imageSize"
+                v-if="selected && phase == 'ban'"
+                class="z-50 cursor-pointer absolute top-0 left-1/2 -translate-x-1/2"
+                :color="'#b91c1c'"
+            />
+        </div>
+    </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
+<script lang="ts" setup>
+import { computed, PropType } from "vue"
 
-import { ChampionPortrait, Phase, Side } from '@/types/championSelect'
+import { ChampionPortrait, Phase, Side } from "@/types/championSelect.types"
 
-import HoverIcon from './icons/HoverIcon.vue'
-import BanIcon from './icons/BanIcon.vue'
+import HoverIcon from "./icons/HoverIcon.vue"
+import BanIcon from "./icons/BanIcon.vue"
 
-export default defineComponent({
-  name: 'ChampionPortrait',
-  components: { HoverIcon, BanIcon },
-  props: {
-    value: Object as PropType<ChampionPortrait>,
+const props = defineProps({
+    champion: Object as PropType<ChampionPortrait>,
     clickable: {
-      type: Boolean,
-      default: false,
+        type: Boolean,
+        default: false,
     },
     rounded: {
-      type: Boolean,
-      default: false,
+        type: Boolean,
+        default: false,
     },
     hideName: {
-      type: Boolean,
-      default: false,
+        type: Boolean,
+        default: false,
     },
     disabled: {
-      type: Boolean,
-      default: false,
+        type: Boolean,
+        default: false,
     },
     selected: {
-      type: Boolean,
-      default: false,
+        type: Boolean,
+        default: false,
     },
     side: String as PropType<Side>,
     phase: String as PropType<Phase>,
-  },
-
-  setup(props) {
-    // TODO Maybe put image size as a  prop?
-
-    const imageSize = 80
-    const imageSizePx = computed(() => `${imageSize}px`)
-
-    const hoverBorder = computed(() =>
-      props.clickable
-        ? `cursor-pointer hover-effects${props.phase ? '-' + props.phase : ''}`
-        : ''
-    )
-
-    return {
-      props,
-      name: props.value?.name,
-      image: props.value?.image,
-      gamePhase: props.phase,
-      hoverBorder,
-      imageSize,
-      imageSizePx,
-    }
-  },
 })
+
+//TODO: find a way to handle portrait and overlays size better
+const imageSize = 80
+const imageSizePx = computed(() => `${imageSize}px`)
 </script>
 
-<style lang="postcss" scoped>
+<style lang="scss" scoped>
 .grayscale {
-  filter: grayscale(100%);
+    filter: grayscale(100%);
 }
 .overlay {
-  width: v-bind(imageSizePx);
-  height: v-bind(imageSizePx);
+    width: v-bind(imageSizePx);
 }
 .hover-effects-pick:hover {
-  @apply border-2 border-yellow-400;
+    @apply border-2 border-yellow-400;
 }
 .hover-effects-ban:hover {
-  @apply border-2 border-red-700;
+    @apply border-2 border-red-700;
 }
 </style>
