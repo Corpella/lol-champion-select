@@ -1,72 +1,52 @@
 <template>
-  <div class="absolute w-full min-h-screen h-full">
-    <img
-      class="absolute w-full h-full image"
-      :src="
-        props.champion && props.phase == 'pick'
-          ? championStyle
-          : 'https://i.imgur.com/2Qyocz8.png'
-      "
-    />
-    <!-- <img
+    <div class="absolute w-full min-h-screen h-full">
+        <img
+            class="absolute w-full h-full image"
+            :src="champion && phase == 'pick' ? championStyle : 'https://i.imgur.com/2Qyocz8.png'"
+        />
+        <!-- <img
       v-else
       class="absolute w-full h-full image"
       src="../assets/images/SummonersRift.png"
       alt="summonersRift"
     /> -->
-    <!-- <img
+        <!-- <img
       v-else
       class="absolute w-full h-full image"
       src="https://i.imgur.com/2Qyocz8.png"
       alt="summonersRift"
     /> -->
 
-    <div
-      class="absolute w-full h-full"
-      :class="`blur-${props.phase}`"
-      style="z-index: -1;"
-    ></div>
-  </div>
+        <div class="absolute w-full h-full -z-10" :class="`blur-${phase}`"></div>
+    </div>
 </template>
 
-<script lang="ts">
-import { Phase } from '@/types/championSelect'
-import { computed, defineComponent, PropType } from 'vue'
+<script lang="ts" setup>
+import { Phase } from "@/types/championSelect.types"
+import { computed, PropType } from "vue"
 
-export default defineComponent({
-  name: 'Background',
-  props: {
+const props = defineProps({
     champion: String,
     phase: { type: String as PropType<Phase>, required: true },
-  },
-  setup(props) {
-    const championStyle = computed(
-      () =>
-        `https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/backgrounds/${props.champion?.toLowerCase()}.jpg`
-    )
-
-    return {
-      props,
-      championStyle,
-    }
-  },
 })
+
+//TODO: find a better way to handle champion background
+const championStyle = computed(
+    () =>
+        `https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/backgrounds/${props.champion?.toLowerCase()}.jpg`,
+)
 </script>
-<style lang="postcss">
+<style lang="scss">
 .image {
-  z-index: -10;
-  filter: brightness(40%);
+    z-index: -10;
+    filter: brightness(40%);
 }
 .blur-pick {
-  z-index: -1;
-  background: -webkit-radial-gradient(circle, transparent, rgb(14, 12, 44));
+    z-index: -1;
+    background: -webkit-radial-gradient(circle, transparent, rgb(14, 12, 44));
 }
 .blur-ban {
-  z-index: -1;
-  background: -webkit-radial-gradient(
-    circle,
-    transparent,
-    rgba(70, 14, 14, 0.87)
-  );
+    z-index: -1;
+    background: -webkit-radial-gradient(circle, transparent, rgba(70, 14, 14, 0.87));
 }
 </style>
