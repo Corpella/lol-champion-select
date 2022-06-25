@@ -1,31 +1,22 @@
 <template>
-    <div class="flex w-full my-2" :class="{ 'flex-row-reverse': props.rhombusVisible && props.side == 'red' }">
-        <div v-if="props.rhombusVisible" class="rhombus" />
-        <div :class="props.side ? `divider-line-${props.side}` : 'divider-line'" />
+    <div class="flex w-full my-2" :class="{ 'flex-row-reverse': rhombusVisible && side == 'red' }">
+        <div v-if="rhombusVisible" class="rhombus" />
+        <div :class="side ? `divider-line-${side}` : 'divider-line'" />
     </div>
 </template>
 
-<script lang="ts">
-import { Side } from "@/types/championSelect"
-import { defineComponent, PropType } from "vue"
-
-export default defineComponent({
-    name: "Background",
-    props: {
-        rhombusVisible: {
-            type: Boolean,
-            default: false,
-        },
-        side: String as PropType<Side>,
+<script lang="ts" setup>
+import { PropType } from "vue"
+import { Side } from "@/types/championSelect.types"
+defineProps({
+    rhombusVisible: {
+        type: Boolean,
+        default: false,
     },
-    setup(props) {
-        return {
-            props,
-        }
-    },
+    side: String as PropType<Side>,
 })
 </script>
-<style lang="postcss" scoped>
+<style lang="scss" scoped>
 .rhombus {
     @apply border border-yellow-200 rotate-45;
     backface-visibility: hidden;
