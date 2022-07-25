@@ -1,7 +1,7 @@
 <template>
     <div class="w-full px-5" v-if="champions?.length">
-        <div id="cs-container" class="">
-            <div v-for="(c, i) in champions" :key="i" class="portrait-wrapper">
+        <div id="cs-container" class="grid h-[65vh] auto-rows-max grid-cols-6 gap-1 overflow-y-scroll pt-3">
+            <div v-for="(c, i) in champions" :key="i" class="max-h-[6rem]">
                 <ChampionsPortrait
                     clickable
                     :key="c.name"
@@ -17,10 +17,10 @@
             </div>
         </div>
     </div>
-    <div class="mt-10 mb-5">
+    <div class="pb-5 pt-10">
         <button
             @click="banChampion"
-            class="text-white font-bold py-2 px-4 rounded"
+            class="rounded py-2 px-4 font-bold text-white"
             :class="hoveredChampion ? 'bg-blue-500 hover:bg-blue-700' : ' bg-gray-500'"
             :disabled="!hoveredChampion"
         >
@@ -65,22 +65,14 @@ const banChampion = () => {
 }
 </script>
 
-<style lang="scss">
-#cs-container {
-    height: 65vh;
-    grid-auto-rows: 110px;
-    @apply grid grid-cols-6 pt-3 overflow-y-scroll gap-1;
-}
+<style lang="scss" scoped>
 #cs-container::-webkit-scrollbar {
-    @apply w-2 max-h-2;
+    @apply max-h-2 w-2;
 }
 #cs-container::-webkit-scrollbar-thumb {
-    @apply bg-yellow-500 bg-opacity-60 rounded-2xl;
+    @apply rounded-2xl bg-yellow-500 bg-opacity-60;
 }
 #cs-container::-webkit-scrollbar-corner {
     background-color: rgba(0, 0, 0, 0);
-}
-.portrait-wrapper {
-    max-height: 100px;
 }
 </style>

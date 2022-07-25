@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col w-full mt-5" :class="side == 'blue' ? 'ml-10 self-start pr-10' : 'mr-10 self-end pl-10'">
+    <div class="mt-5 flex w-full flex-col" :class="side == 'blue' ? 'ml-10 self-start pr-10' : 'mr-10 self-end pl-10'">
         <Divider rhombus-visible :side="side" />
         <div v-for="i in 5" :key="i">
             <div class="flex" :class="{ 'flex-row-reverse': position == 'right' }">
@@ -16,7 +16,7 @@
                 </template>
                 <template v-else>
                     <div
-                        class="rounded-full bg-black empty-portrait mx-5"
+                        class="mx-5 aspect-square w-20 rounded-full bg-black"
                         :class="{
                             'border-2 border-yellow-400': side == 'blue',
                             'border-2 border-red-700': side == 'red',
@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, PropType } from "vue"
+import { PropType } from "vue"
 
 import { Side, Champions, Position } from "@/types/championSelect.types"
 import ChampionsPortrait from "./ChampionPortrait.vue"
@@ -48,10 +48,3 @@ defineProps({
 
 const firstLetterUppercase = (name: string): string => name.charAt(0).toUpperCase() + name.slice(1)
 </script>
-
-<style lang="scss">
-.empty-portrait {
-    width: 80px;
-    height: 80px;
-}
-</style>

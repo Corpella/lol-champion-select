@@ -1,38 +1,38 @@
 <template>
     <div class="relative">
-        <div class="w-full flex flex-col justify-center">
+        <div class="flex w-full flex-col justify-center">
             <img
                 class="z-10 aspect-square self-center"
                 :class="[
                     {
-                        grayscale: props.disabled || selected,
-                        'rounded-full': props.rounded,
+                        grayscale: disabled || selected,
+                        'rounded-full': rounded,
                         'border-2 border-yellow-400': side == 'blue',
                         'border-2 border-red-700': side == 'red',
-                        'border border-red-700': props.phase == 'ban',
+                        'border border-red-700': phase == 'ban',
                     },
-                    clickable && props.phase && `cursor-pointer hover-effects${props.phase}`,
+                    clickable && phase && `cursor-pointer hover-effects${phase}`,
                 ]"
                 :key="champion?.name"
                 :src="champion?.image"
                 :alt="champion?.name"
                 :width="imageSize"
             />
-            <p class="text-sm text-center" v-if="!hideName">{{ champion?.name }}</p>
+            <p class="text-center text-sm" v-if="!hideName">{{ champion?.name }}</p>
             <div
                 v-if="selected && phase == 'pick'"
-                class="z-50 absolute top-0 left-1/2 -translate-x-1/2 cursor-pointer rounded-full border-2 border-yellow-400 overlay aspect-square"
+                class="overlay absolute top-0 left-1/2 z-50 aspect-square -translate-x-1/2 cursor-pointer rounded-full border-2 border-yellow-400"
             />
             <HoverIcon
                 :width="imageSize"
                 v-if="selected"
-                class="z-50 cursor-pointer absolute top-0 left-1/2 -translate-x-1/2"
+                class="absolute top-0 left-1/2 z-50 -translate-x-1/2 cursor-pointer"
                 :color="phase == 'ban' ? '#b91c1c' : '#fbbf24'"
             />
             <BanIcon
                 :width="imageSize"
                 v-if="selected && phase == 'ban'"
-                class="z-50 cursor-pointer absolute top-0 left-1/2 -translate-x-1/2"
+                class="absolute top-0 left-1/2 z-50 -translate-x-1/2 cursor-pointer"
                 :color="'#b91c1c'"
             />
         </div>
@@ -79,16 +79,7 @@ const imageSizePx = computed(() => `${imageSize}px`)
 </script>
 
 <style lang="scss" scoped>
-.grayscale {
-    filter: grayscale(100%);
-}
 .overlay {
     width: v-bind(imageSizePx);
-}
-.hover-effects-pick:hover {
-    @apply border-2 border-yellow-400;
-}
-.hover-effects-ban:hover {
-    @apply border-2 border-red-700;
 }
 </style>
