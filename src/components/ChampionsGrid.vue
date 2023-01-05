@@ -1,36 +1,5 @@
-<template>
-    <div class="w-full px-5" v-if="champions?.length">
-        <div id="cs-container" class="grid h-[65vh] auto-rows-max grid-cols-6 gap-1 overflow-y-scroll pt-3">
-            <div v-for="(c, i) in champions" :key="i" class="max-h-[6rem]">
-                <ChampionsPortrait
-                    clickable
-                    :key="c.name"
-                    :phase="phase"
-                    :selected="c.id == hoveredChampion"
-                    :disabled="isChampBanned(c.id)"
-                    :champion="{
-                        name: c.name,
-                        image: `https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/${c.id.toLowerCase()}.png`,
-                    }"
-                    @click="clickChampion(c.id)"
-                />
-            </div>
-        </div>
-    </div>
-    <div class="pb-5 pt-10">
-        <button
-            @click="banChampion"
-            class="rounded py-2 px-4 font-bold text-white"
-            :class="hoveredChampion ? 'bg-blue-500 hover:bg-blue-700' : ' bg-gray-500'"
-            :disabled="!hoveredChampion"
-        >
-            Ban champion
-        </button>
-    </div>
-</template>
-
 <script lang="ts" setup>
-import { Phase, SingleChampion } from "@/types/championSelect.types"
+import { Phase, SingleChampion } from "~/championSelect"
 import { PropType } from "vue"
 
 import ChampionsPortrait from "./ChampionPortrait.vue"
@@ -64,6 +33,34 @@ const banChampion = () => {
     emit("update:hoveredChampion", "")
 }
 </script>
+<template>
+    <div id="cs-container" class="grid h-[65vh] auto-rows-max grid-cols-6 gap-1 overflow-y-scroll px-5 pt-3">
+        <ChampionsPortrait
+            v-for="({ name, id }, i) in champions"
+            class="max-h-[6rem]"
+            clickable
+            :key="name"
+            :phase="phase"
+            :selected="id === hoveredChampion"
+            :disabled="isChampBanned(id)"
+            :champion="{
+                name: name,
+                image: `https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/${id.toLowerCase()}.png`,
+            }"
+            @click="clickChampion(id)"
+        />
+    </div>
+    <footer class="pb-5 pt-10 text-center">
+        <button
+            @click="banChampion"
+            class="rounded py-2 px-4 font-bold text-white"
+            :class="hoveredChampion ? 'bg-blue-500 hover:bg-blue-700' : ' bg-gray-500'"
+            :disabled="!hoveredChampion"
+        >
+            Ban champion
+        </button>
+    </footer>
+</template>
 
 <style lang="scss" scoped>
 #cs-container::-webkit-scrollbar {
