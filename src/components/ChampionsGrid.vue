@@ -34,7 +34,10 @@ const banChampion = () => {
 }
 </script>
 <template>
-    <div id="cs-container" class="grid h-[65vh] auto-rows-max grid-cols-6 gap-1 overflow-y-scroll px-5 pt-3">
+    <div
+        id="cs-container"
+        class="grid h-[65vh] auto-rows-max grid-cols-3 gap-1 overflow-y-scroll px-5 pt-3 sm:grid-cols-4 lg:grid-cols-6"
+    >
         <ChampionsPortrait
             v-for="({ name, id }, i) in champions"
             class="max-h-[6rem]"
