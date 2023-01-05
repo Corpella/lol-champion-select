@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import { Champions, Side, SingleChampion, } from '@/types/championSelect.types'
+import { Champions, Side, SingleChampion, } from '@/types/championSelect'
 
 export const useChampions = defineStore({
     id: "useChampions",
@@ -22,7 +22,7 @@ export const useChampions = defineStore({
     },
     actions: {
         getChampionList() {
-            fetch("http://ddragon.leagueoflegends.com/cdn/12.11.1/data/en_US/champion.json")
+            fetch("http://ddragon.leagueoflegends.com/cdn/12.23.1/data/en_US/champion.json")
                 .then((res) => res.json())
                 .then((response) => {
                     const championsData = Object.values(response.data) as SingleChampion[]
