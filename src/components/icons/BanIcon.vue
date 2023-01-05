@@ -1,3 +1,12 @@
+<script lang="ts" setup>
+defineProps({
+    width: Number,
+    color: {
+        type: String,
+        default: "gray",
+    },
+})
+</script>
 <template>
     <svg
         :width="width"
@@ -15,17 +24,3 @@
         />
     </svg>
 </template>
-
-<script lang="ts" setup>
-import { PropType } from "vue"
-
-defineProps({
-    width: Number as PropType<number>,
-    color: {
-        type: String as PropType<string>,
-        default: "gray",
-    },
-})
-</script>
-
-<style></style>
