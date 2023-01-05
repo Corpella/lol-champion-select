@@ -1,7 +1,22 @@
+<script lang="ts" setup>
+import { Phase } from "~/championSelect"
+import { computed, PropType } from "vue"
+
+const props = defineProps({
+    champion: String,
+    phase: { type: String as PropType<Phase>, required: true },
+})
+
+//TODO: find a better way to handle champion background
+const championStyle = computed(
+    () =>
+        `https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/backgrounds/${props.champion?.toLowerCase()}.jpg`,
+)
+</script>
 <template>
-    <div class="absolute w-full min-h-screen h-full">
+    <div class="absolute h-full min-h-screen w-full">
         <img
-            class="absolute w-full h-full image"
+            class="image absolute h-full w-full"
             :src="champion && phase == 'pick' ? championStyle : 'https://i.imgur.com/2Qyocz8.png'"
         />
         <!-- <img
@@ -17,26 +32,11 @@
       alt="summonersRift"
     /> -->
 
-        <div class="absolute w-full h-full -z-10" :class="`blur-${phase}`"></div>
+        <div class="absolute -z-10 h-full w-full" :class="`blur-${phase}`"></div>
     </div>
 </template>
 
-<script lang="ts" setup>
-import { Phase } from "@/types/championSelect.types"
-import { computed, PropType } from "vue"
-
-const props = defineProps({
-    champion: String,
-    phase: { type: String as PropType<Phase>, required: true },
-})
-
-//TODO: find a better way to handle champion background
-const championStyle = computed(
-    () =>
-        `https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/backgrounds/${props.champion?.toLowerCase()}.jpg`,
-)
-</script>
-<style lang="scss">
+<style lang="scss" scoped>
 .image {
     z-index: -10;
     filter: brightness(40%);
